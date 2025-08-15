@@ -32,6 +32,12 @@ public class ConverterFactory {
     private static final ChildrenTypeDTOConverter childrenTypeDTOConverter = 
         new ChildrenTypeDTOConverterImpl();
     
+    private static final EditDTOToEditItemConverter editDTOToEditItemConverter = 
+        new EditDTOToEditItemConverterImpl();
+    
+    private static final ViewFindDTOListToViewItemListConverter viewFindDTOListToViewItemListConverter = 
+        new ViewFindDTOListToViewItemListConverterImpl();
+    
     /**
      * Returns the GiaoDichToEditDTOConverter instance
      * @return GiaoDichToEditDTOConverter implementation
@@ -86,5 +92,21 @@ public class ConverterFactory {
      */
     public static ChildrenTypeDTOConverter getChildrenTypeDTOConverter() {
         return childrenTypeDTOConverter;
+    }
+    
+    /**
+     * Returns the EditDTOToEditItemConverter instance
+     * @return EditDTOToEditItemConverter implementation
+     */
+    public static EditDTOToEditItemConverter getEditDTOToEditItemConverter() {
+        return editDTOToEditItemConverter;
+    }
+    
+    /**
+     * Returns the ViewFindDTOListToViewItemListConverter instance
+     * @return ViewFindDTOListToViewItemListConverter implementation
+     */
+    public static ViewFindDTOListToViewItemListConverter getViewFindDTOListToViewItemListConverter() {
+        return viewFindDTOListToViewItemListConverter;
     }
 }

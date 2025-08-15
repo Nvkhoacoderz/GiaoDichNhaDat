@@ -175,7 +175,11 @@ public class HomePageUi implements Subscriber{
                 ConverterFactory.getGiaoDichDTOToBusinessConverter(),
                 ConverterFactory.getGiaoDichToViewFindDTOConverter()
             );
-            GiaoDichListViewController listController = new GiaoDichListViewController(viewModel, listUC);
+            GiaoDichListViewController listController = new GiaoDichListViewController(
+                viewModel, 
+                listUC,
+                ConverterFactory.getViewFindDTOListToViewItemListConverter()
+            );
             listController.excute(); // Load danh sách vào viewModel
 
             // Gán danh sách vào tableView

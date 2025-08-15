@@ -26,7 +26,11 @@ public class GiaoDichEditUi implements Subscriber {
                 ConverterFactory.getGiaoDichToEditDTOConverter()
             );
             
-            OpenEditFormController openForm = new OpenEditFormController(viewModel, openEditFormUseCase);
+            OpenEditFormController openForm = new OpenEditFormController(
+                viewModel, 
+                openEditFormUseCase,
+                ConverterFactory.getEditDTOToEditItemConverter()
+            );
             OpenEditFormModel model = new OpenEditFormModel();
             
             OpenAndEditFormUseCase openAndEditFormUseCase = new OpenAndEditFormUseCase(
@@ -51,7 +55,11 @@ public class GiaoDichEditUi implements Subscriber {
                         ConverterFactory.getGiaoDichDTOToBusinessConverter(),
                         ConverterFactory.getGiaoDichToEditDTOConverter()
                     );
-                    GiaoDichEditController editController = new GiaoDichEditController(viewModel, editUC);
+                    GiaoDichEditController editController = new GiaoDichEditController(
+                        viewModel, 
+                        editUC,
+                        ConverterFactory.getEditDTOToEditItemConverter()
+                    );
                     editController.editGD(edited);
                     new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!").showAndWait();
                     if (onSaveCallback != null) onSaveCallback.run(); // Reload lại danh sách nếu cần
