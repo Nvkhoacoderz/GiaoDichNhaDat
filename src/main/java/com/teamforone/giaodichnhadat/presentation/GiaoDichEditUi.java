@@ -2,6 +2,7 @@ package com.teamforone.giaodichnhadat.presentation;
 
 import com.teamforone.giaodichnhadat.business.*;
 import com.teamforone.giaodichnhadat.business.OpenAndEditForm.OpenAndEditFormUseCase;
+import com.teamforone.giaodichnhadat.converters.ConverterFactory;
 import com.teamforone.giaodichnhadat.persistence.OpenAndEditForm.SQLServerOpenEditForm;
 import com.teamforone.giaodichnhadat.persistence.SQLServerGiaoDichEditDAO;
 import com.teamforone.giaodichnhadat.presentation.OpenAndEditForm.OpenAndEditFormController;
@@ -17,10 +18,23 @@ public class GiaoDichEditUi implements Subscriber {
             viewModel = new GiaoDichEditModel();
             SQLServerOpenEditForm openEditFormDAO = new SQLServerOpenEditForm();
             SQLServerGiaoDichEditDAO giaoDichDAO = new SQLServerGiaoDichEditDAO();
-            OpenEditFormUseCase openEditFormUseCase = new OpenEditFormUseCase(giaoDichDAO);
+            
+            // Use factory to inject converter dependencies
+            OpenEditFormUseCase openEditFormUseCase = new OpenEditFormUseCase(
+                giaoDichDAO,
+                ConverterFactory.getGiaoDichDTOToBusinessConverter(),
+                ConverterFactory.getGiaoDichToEditDTOConverter()
+            );
+            
             OpenEditFormController openForm = new OpenEditFormController(viewModel, openEditFormUseCase);
             OpenEditFormModel model = new OpenEditFormModel();
-            OpenAndEditFormUseCase openAndEditFormUseCase = new OpenAndEditFormUseCase(openEditFormDAO);
+            
+            OpenAndEditFormUseCase openAndEditFormUseCase = new OpenAndEditFormUseCase(
+                openEditFormDAO,
+                ConverterFactory.getParentTypeDTOConverter(),
+                ConverterFactory.getChildrenTypeDTOConverter()
+            );
+            
             OpenAndEditFormController openAndEditFormController = new OpenAndEditFormController(openAndEditFormUseCase,model);
             openForm.openEditForm(maGiaoDich);
 
@@ -31,7 +45,13 @@ public class GiaoDichEditUi implements Subscriber {
                 GiaoDichEditDTO edited = formView.showDialog(item); // Form trả về DTO đã sửa hoặc null nếu cancel
                 if (edited != null) {
                     // Lưu dữ liệu vừa sửa
-                    GiaoDichEditController editController = new GiaoDichEditController(viewModel, new GiaoDichEditUC(giaoDichDAO));
+                    GiaoDichEditUC editUC = new GiaoDichEditUC(
+                        giaoDichDAO,
+                        ConverterFactory.getEditDTOToGiaoDichDTOConverter(),
+                        ConverterFactory.getGiaoDichDTOToBusinessConverter(),
+                        ConverterFactory.getGiaoDichToEditDTOConverter()
+                    );
+                    GiaoDichEditController editController = new GiaoDichEditController(viewModel, editUC);
                     editController.editGD(edited);
                     new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!").showAndWait();
                     if (onSaveCallback != null) onSaveCallback.run(); // Reload lại danh sách nếu cần
