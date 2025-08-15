@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teamforone.giaodichnhadat.presentation.GiaoDichEditUi">
+   <children>
+      <Label alignment="CENTER" layoutY="-1.0" prefHeight="36.0" prefWidth="449.0" style="-fx-background-color: red;" text="SỬA GIAO DỊCH" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="35.0" prefHeight="54.0" prefWidth="167.0" text="MÃ GIAO DỊCH:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="91.0" text="NGÀY GIAO DỊCH:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="130.0" text="ĐƠN GIÁ:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="168.0" text="LOẠI GIAO DỊCH:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="70.0" layoutY="206.0" text="DIỆN TÍCH:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="91.0" layoutY="251.0" text="ĐỊA CHỈ:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="294.0" text="LOẠI NHÀ / ĐẤT:">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtMaGiaoDich" layoutX="163.0" layoutY="49.0" prefHeight="26.0" prefWidth="280.0" promptText="Mã Giao Dịch" />
+      <DatePicker fx:id="dateNgayGiaoDich" layoutX="163.0" layoutY="88.0" prefHeight="26.0" prefWidth="280.0" promptText="Ngày Giao Dịch" />
+      <Button fx:id="btnLuu" layoutX="76.0" layoutY="342.0" mnemonicParsing="false" text="LƯU THAY ĐỔI">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnThoat" layoutX="269.0" layoutY="342.0" mnemonicParsing="false" text="THOÁT">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txtDonGia" layoutX="163.0" layoutY="126.0" prefHeight="26.0" prefWidth="280.0" promptText="Đơn Giá" />
+      <TextField fx:id="txtDienTich" layoutX="163.0" layoutY="203.0" prefHeight="26.0" prefWidth="280.0" promptText="Diện Tích" />
+      <TextField fx:id="txtDiaChi" layoutX="163.0" layoutY="247.0" prefHeight="26.0" prefWidth="280.0" promptText="Địa Chỉ" />
+      <ComboBox fx:id="comboLoaiGiaoDich" layoutX="163.0" layoutY="164.0"  prefHeight="26.0" prefWidth="123.0" promptText=":))" />
+      <ComboBox fx:id="comboLoaiChiTiet" layoutX="163.0" layoutY="291.0" prefHeight="26.0" prefWidth="123.0" promptText=":&gt;&gt;" />
+   </children>
+</AnchorPane>
