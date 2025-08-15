@@ -115,6 +115,7 @@ package com.teamforone.giaodichnhadat.presentation;
 
 import com.teamforone.giaodichnhadat.business.FindGiaoDichUC;
 import com.teamforone.giaodichnhadat.business.GiaoDichListViewUC;
+import com.teamforone.giaodichnhadat.converters.ConverterFactory;
 import com.teamforone.giaodichnhadat.persistence.GiaoDichDTO;
 import com.teamforone.giaodichnhadat.persistence.SQLServerGiaoDichEditDAO;
 import javafx.collections.FXCollections;
@@ -167,16 +168,34 @@ public class HomePageUi implements Subscriber{
         try {
             viewModel = new GiaoDichEditModel();
             dao = new SQLServerGiaoDichEditDAO();
-            GiaoDichListViewUC listUC = new GiaoDichListViewUC(dao); // DAO bạn đã có sẵn
-            GiaoDichListViewController listController = new GiaoDichListViewController(viewModel, listUC);
+            
+            // Create UseCase with converter dependencies
+            GiaoDichListViewUC listUC = new GiaoDichListViewUC(
+                dao,
+                ConverterFactory.getGiaoDichDTOToBusinessConverter(),
+                ConverterFactory.getGiaoDichToViewFindDTOConverter()
+            );
+            GiaoDichListViewController listController = new GiaoDichListViewController(
+                viewModel, 
+                listUC,
+                ConverterFactory.getViewFindDTOListToViewItemListConverter()
+            );
             listController.excute(); // Load danh sách vào viewModel
 
             // Gán danh sách vào tableView
             tableView.setItems(viewModel.listItems);
 
             // Khởi tạo controller tìm kiếm
-            FindGiaoDichUC findUC = new FindGiaoDichUC(dao);
-            timGiaoDichController = new TimGiaoDichController(findUC, viewModel);
+            FindGiaoDichUC findUC = new FindGiaoDichUC(
+                dao,
+                ConverterFactory.getGiaoDichDTOToBusinessConverter(),
+                ConverterFactory.getGiaoDichToViewFindDTOConverter()
+            );
+            timGiaoDichController = new TimGiaoDichController(
+                findUC, 
+                viewModel,
+                ConverterFactory.getViewFindDTOToViewItemConverter()
+            );
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,61 +1,33 @@
 package com.teamforone.giaodichnhadat.business.OpenAndEditForm;
 
+import com.teamforone.giaodichnhadat.converters.interfaces.ChildrenTypeDTOConverter;
+import com.teamforone.giaodichnhadat.converters.interfaces.ParentTypeDTOConverter;
 import com.teamforone.giaodichnhadat.persistence.OpenAndEditForm.ChildrenTypeDTO;
 import com.teamforone.giaodichnhadat.persistence.OpenAndEditForm.OpenEditFormGateway;
 import com.teamforone.giaodichnhadat.persistence.OpenAndEditForm.ParentTypeDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OpenAndEditFormUseCase {
-    private OpenEditFormGateway openEditFormGateway;
+    private final OpenEditFormGateway openEditFormGateway;
+    private final ParentTypeDTOConverter parentTypeDTOConverter;
+    private final ChildrenTypeDTOConverter childrenTypeDTOConverter;
 
-    public OpenAndEditFormUseCase(OpenEditFormGateway openEditFormGateway) {
+    public OpenAndEditFormUseCase(OpenEditFormGateway openEditFormGateway,
+                                  ParentTypeDTOConverter parentTypeDTOConverter,
+                                  ChildrenTypeDTOConverter childrenTypeDTOConverter) {
         this.openEditFormGateway = openEditFormGateway;
+        this.parentTypeDTOConverter = parentTypeDTOConverter;
+        this.childrenTypeDTOConverter = childrenTypeDTOConverter;
     }
 
     public List<ResParentTypeDTO> execute() {
-        List<ParentTypeDTO> listDTO = null;
-        listDTO = openEditFormGateway.getAll();
-        return convertToResParentTypeDTO(listDTO);
+        List<ParentTypeDTO> listDTO = openEditFormGateway.getAll();
+        return parentTypeDTOConverter.convertList(listDTO);
     }
 
     public List<ResChildrenTypeDTO> executes(String parentId) {
-        List<ChildrenTypeDTO> listDTO = null;
-        listDTO = openEditFormGateway.getAll(parentId);
-        return convertToResChildrenTypeDTO(listDTO);
-    }
-
-    private List<ResParentTypeDTO> convertToResParentTypeDTO(List<ParentTypeDTO> listDTO) {
-        // TODO Auto-generated method stub
-        List<ResParentTypeDTO> list = new ArrayList<ResParentTypeDTO>();
-        for (ParentTypeDTO majorDTO : listDTO) {
-            ResParentTypeDTO resDTO = new ResParentTypeDTO();
-            resDTO.id = majorDTO.id;
-            resDTO.name = majorDTO.name;
-            resDTO.description = majorDTO.description;
-
-            list.add(resDTO);
-
-        }
-
-        return list;
-    }
-
-    private List<ResChildrenTypeDTO> convertToResChildrenTypeDTO(List<ChildrenTypeDTO> listDTO) {
-        // TODO Auto-generated method stub
-        List<ResChildrenTypeDTO> list = new ArrayList<ResChildrenTypeDTO>();
-        for (ChildrenTypeDTO majorDTO : listDTO) {
-            ResChildrenTypeDTO resDTO = new ResChildrenTypeDTO();
-            resDTO.id = majorDTO.id;
-            resDTO.name = majorDTO.name;
-            resDTO.description = majorDTO.description;
-            resDTO.parentId = majorDTO.parentId;
-
-            list.add(resDTO);
-
-        }
-
-        return list;
+        List<ChildrenTypeDTO> listDTO = openEditFormGateway.getAll(parentId);
+        return childrenTypeDTOConverter.convertList(listDTO);
     }
 }
